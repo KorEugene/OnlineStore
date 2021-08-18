@@ -38,4 +38,9 @@ public class ProductController {
         productService.save(product);
         return new ProductDto(product);
     }
+
+    @GetMapping("/delete")
+    public void removeProduct(@RequestParam(name = "p") Long id) {
+        productService.deleteById(id);
+    }
 }
