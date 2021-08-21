@@ -5,14 +5,6 @@ angular.module('market-front', []).controller('indexController', function ($scop
     $scope.lastPageIndex = 1;
     $scope.currentPage = 1;
 
-    // $scope.loadProducts = function () {
-    //     $http.get(contextPath + 'products')
-    //         .then(function (response) {
-    //             console.log(response);
-    //             $scope.productsPage = response.data;
-    //         });
-    // };
-
     $scope.changePage = function (offset) {
         let nextPageIndex = $scope.currentPage + offset;
         if (nextPageIndex < $scope.firstPageIndex || nextPageIndex > $scope.lastPageIndex) {
@@ -25,7 +17,7 @@ angular.module('market-front', []).controller('indexController', function ($scop
 
     $scope.loadProducts = function (pageIndex = 1) {
         $http({
-            url: contextPath + 'products',
+            url: contextPath + 'api/v1/products',
             method: 'GET',
             params: {
                 p: pageIndex
@@ -39,7 +31,7 @@ angular.module('market-front', []).controller('indexController', function ($scop
 
     $scope.delete = function (product) {
         $http({
-            url: contextPath + 'delete',
+            url: contextPath + 'api/v1/products/delete',
             method: 'GET',
             params: {
                 p: product.id
@@ -49,18 +41,6 @@ angular.module('market-front', []).controller('indexController', function ($scop
             $scope.loadProducts();
         });
     };
-
-    // $scope.wrongRequest = function () {
-    // WRONG:
-    // $http.get(contextPath + 'products/update/1');
-    // reload();
-
-    // CORRECT
-    // $http.get(contextPath + 'products/update/1')
-    //     .then(function (response) {
-    //         reload();
-    //     });
-    // }
 
     $scope.loadProducts();
 

@@ -4,18 +4,20 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.springwebappjs.dtos.ProductDto;
+import ru.geekbrains.springwebappjs.exceptions.ResourceNotFoundException;
 import ru.geekbrains.springwebappjs.model.Category;
 import ru.geekbrains.springwebappjs.model.Product;
 import ru.geekbrains.springwebappjs.services.CategoryService;
 import ru.geekbrains.springwebappjs.services.ProductService;
 
 @RestController
+@RequestMapping("/api/v1/products")
 @RequiredArgsConstructor
 public class ProductController {
     private final ProductService productService;
     private final CategoryService categoryService;
 
-    @GetMapping("/products")
+    @GetMapping
     public Page<ProductDto> findAll(@RequestParam(defaultValue = "1", name = "p") int pageIndex) {
         if (pageIndex < 1) {
             pageIndex = 1;
@@ -23,17 +25,18 @@ public class ProductController {
         return productService.findAll(pageIndex - 1, 10).map(ProductDto::new);
     }
 
-    @GetMapping("/products/{id}")
+    @GetMapping("/{id}")
     public ProductDto findById(@PathVariable Long id) {
-        return new ProductDto(productService.findById(id).get());
+        Product product = productService.findById(id).orElseThrow(() -> new ResourceNotFoundException("Product id = " + id + " not found"));
+        return new ProductDto(product);
     }
 
-    @PostMapping("/products")
+    @PostMapping
     public ProductDto save(@RequestBody ProductDto productDto) {
         Product product = new Product();
         product.setPrice(productDto.getPrice());
         product.setTitle(productDto.getTitle());
-        Category category = categoryService.findByTitle(productDto.getCategoryTitle()).get();
+        Category category = categoryService.findByTitle(productDto.getCategoryTitle()).orElseThrow(() -> new ResourceNotFoundException("Category title = " + productDto.getCategoryTitle() + " not found"));
         product.setCategory(category);
         productService.save(product);
         return new ProductDto(product);
