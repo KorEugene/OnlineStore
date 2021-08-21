@@ -50,10 +50,10 @@ angular.module('market-front', []).controller('indexController', function ($scop
         return arr;
     }
 
-    $scope.delete = function (product) {
+    $scope.deleteProduct = function (product) {
         $http({
-            url: contextPath + 'api/v1/products/delete',
-            method: 'GET',
+            url: contextPath + 'api/v1/products',
+            method: 'DELETE',
             params: {
                 p: product.id
             }
@@ -62,6 +62,16 @@ angular.module('market-front', []).controller('indexController', function ($scop
             $scope.loadProducts(currentPageIndex);
         });
     };
+
+    $scope.updateProduct = function () {
+        $http.put(contextPath + 'api/v1/products', $scope.update_product)
+            .then(function successCallback(response) {
+                $scope.loadProducts(currentPageIndex);
+                $scope.update_product = null;
+            }, function failureCallback(response) {
+                alert(response.data.message);
+            });
+    }
 
     $scope.loadProducts();
 
