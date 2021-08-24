@@ -42,8 +42,19 @@ public class ProductController {
         return new ProductDto(product);
     }
 
-    @GetMapping("/delete")
+    @DeleteMapping
     public void removeProduct(@RequestParam(name = "p") Long id) {
         productService.deleteById(id);
+    }
+
+    @PutMapping
+    public ProductDto updateProduct(@RequestBody ProductDto productDto) {
+        Product product = productService.findById(productDto.getId()).orElseThrow(() -> new ResourceNotFoundException("Product id = " + productDto.getId() + " not found"));
+        product.setTitle(productDto.getTitle());
+        product.setPrice(productDto.getPrice());
+        Category category = categoryService.findByTitle(productDto.getCategoryTitle()).orElseThrow(() -> new ResourceNotFoundException("Category title = " + productDto.getCategoryTitle() + " not found"));
+        product.setCategory(category);
+        productService.save(product);
+        return new ProductDto(product);
     }
 }
