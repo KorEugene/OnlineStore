@@ -2,13 +2,19 @@ package ru.geekbrains.springwebappjs.controllers;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.springwebappjs.dtos.ProductDto;
+import ru.geekbrains.springwebappjs.exceptions.DataValidationException;
 import ru.geekbrains.springwebappjs.exceptions.ResourceNotFoundException;
 import ru.geekbrains.springwebappjs.model.Category;
 import ru.geekbrains.springwebappjs.model.Product;
 import ru.geekbrains.springwebappjs.services.CategoryService;
 import ru.geekbrains.springwebappjs.services.ProductService;
+
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/products")
@@ -32,7 +38,10 @@ public class ProductController {
     }
 
     @PostMapping
-    public ProductDto save(@RequestBody ProductDto productDto) {
+    public ProductDto save(@RequestBody @Validated ProductDto productDto, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            throw new DataValidationException(bindingResult.getAllErrors().stream().map(ObjectError::getDefaultMessage).collect(Collectors.toList()));
+        }
         Product product = new Product();
         product.setPrice(productDto.getPrice());
         product.setTitle(productDto.getTitle());
@@ -48,13 +57,7 @@ public class ProductController {
     }
 
     @PutMapping
-    public ProductDto updateProduct(@RequestBody ProductDto productDto) {
-        Product product = productService.findById(productDto.getId()).orElseThrow(() -> new ResourceNotFoundException("Product id = " + productDto.getId() + " not found"));
-        product.setTitle(productDto.getTitle());
-        product.setPrice(productDto.getPrice());
-        Category category = categoryService.findByTitle(productDto.getCategoryTitle()).orElseThrow(() -> new ResourceNotFoundException("Category title = " + productDto.getCategoryTitle() + " not found"));
-        product.setCategory(category);
-        productService.save(product);
-        return new ProductDto(product);
+    public void updateProduct(@RequestBody ProductDto productDto) {
+        productService.updateProductFromDto(productDto);
     }
 }
