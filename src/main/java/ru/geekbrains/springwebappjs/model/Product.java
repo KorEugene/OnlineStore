@@ -2,6 +2,7 @@ package ru.geekbrains.springwebappjs.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ru.geekbrains.springwebappjs.dtos.ProductDto;
 
 import javax.persistence.*;
 
@@ -24,4 +25,10 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
+
+    public Product(ProductDto productDto) {
+        this.id = productDto.getId();
+        this.title = productDto.getTitle();
+        this.price = productDto.getPrice();
+    }
 }

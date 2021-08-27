@@ -1,0 +1,26 @@
+<div>
+    <p></p>
+    <h3>Корзина</h3>
+    <table class="table">
+        <thead>
+        <tr>
+            <td>ID</td>
+            <td>Название</td>
+            <td>Цена</td>
+            <td></td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="p in cartProducts">
+            <td>{{p.id}}</td>
+            <td>{{p.title}}</td>
+            <td>{{p.price}}</td>
+            <td>
+                <button class="btn btn-primary" ng-click="removeProductFromCart(p)">Удалить из корзины</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <p></p>
+
+</div>

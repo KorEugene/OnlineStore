@@ -29,5 +29,12 @@ angular.module('market-front').controller('storeController', function ($scope, $
         $location.path('/edit_product/' + productId);
     }
 
+    $scope.addProductToCart = function (product) {
+        $http.post(contextPath + 'api/v1/cart', product)
+            .then(function (response) {
+                console.log(response);
+            });
+    }
+
     $scope.loadProducts();
 });
