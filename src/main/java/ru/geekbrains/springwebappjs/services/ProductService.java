@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.geekbrains.springwebappjs.dtos.ProductDto;
 import ru.geekbrains.springwebappjs.exceptions.ResourceNotFoundException;
-import ru.geekbrains.springwebappjs.model.Category;
-import ru.geekbrains.springwebappjs.model.Product;
+import ru.geekbrains.springwebappjs.entities.Category;
+import ru.geekbrains.springwebappjs.entities.Product;
 import ru.geekbrains.springwebappjs.repositories.ProductRepository;
 
 import java.util.Optional;

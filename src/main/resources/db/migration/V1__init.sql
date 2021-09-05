@@ -35,3 +35,40 @@ values ('Bread', 25, 1),
        ('Cheese16', 450, 1),
        ('Cheese17', 450, 1),
        ('Cheese18', 450, 1);
+
+create table users
+(
+    id         bigserial primary key,
+    username   varchar(30) not null,
+    password   varchar(80) not null,
+    email      varchar(50) unique,
+    created_at timestamp default current_timestamp,
+    updated_at timestamp default current_timestamp
+);
+
+create table roles
+(
+    id         bigserial primary key,
+    name       varchar(50) not null,
+    created_at timestamp default current_timestamp,
+    updated_at timestamp default current_timestamp
+);
+
+create table users_roles
+(
+    user_id bigint not null references users (id),
+    role_id bigint not null references roles (id),
+    primary key (user_id, role_id)
+);
+
+insert into roles (name)
+values ('ROLE_USER'),
+       ('ROLE_ADMIN');
+
+insert into users (username, password, email)
+values ('user', '$2a$12$90tN4/VUgeZlgDt7grx48OAH9GM8VkBlcSTrKtC.nVYvmu22Zt.l.', 'user@gmail.com'), -- user/user
+       ('admin', '$2a$12$Lyiu7NVkcCPZ8bhuPNwtdubWz4nkuR75UG1sz2pqE44LCS9O2fY1u', 'admin@gmail.com'); -- admin/admin
+
+insert into users_roles (user_id, role_id)
+values (1, 1),
+       (2, 2);

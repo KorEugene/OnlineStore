@@ -3,7 +3,7 @@ package ru.geekbrains.springwebappjs.dtos;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
-import ru.geekbrains.springwebappjs.model.Product;
+import ru.geekbrains.springwebappjs.entities.Product;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;

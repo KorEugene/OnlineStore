@@ -1,4 +1,4 @@
-package ru.geekbrains.springwebappjs.model;
+package ru.geekbrains.springwebappjs.entities;
 
 import lombok.Getter;
 import org.springframework.stereotype.Component;

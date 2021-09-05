@@ -2,7 +2,7 @@ package ru.geekbrains.springwebappjs.services;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.geekbrains.springwebappjs.model.Category;
+import ru.geekbrains.springwebappjs.entities.Category;
 import ru.geekbrains.springwebappjs.repositories.CategoryRepository;
 
 import java.util.Optional;

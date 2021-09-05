@@ -2,7 +2,7 @@ package ru.geekbrains.springwebappjs.dtos;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ru.geekbrains.springwebappjs.model.Category;
+import ru.geekbrains.springwebappjs.entities.Category;
 
 import java.util.List;
 import java.util.stream.Collectors;

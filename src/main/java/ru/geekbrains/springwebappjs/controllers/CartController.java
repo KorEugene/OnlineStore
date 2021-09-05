@@ -6,8 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.springwebappjs.dtos.ProductDto;
 import ru.geekbrains.springwebappjs.exceptions.ResourceNotFoundException;
-import ru.geekbrains.springwebappjs.model.Category;
-import ru.geekbrains.springwebappjs.model.Product;
+import ru.geekbrains.springwebappjs.entities.Category;
+import ru.geekbrains.springwebappjs.entities.Product;
 import ru.geekbrains.springwebappjs.services.CartService;
 import ru.geekbrains.springwebappjs.services.CategoryService;
 
