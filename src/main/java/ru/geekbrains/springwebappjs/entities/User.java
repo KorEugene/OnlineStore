@@ -1,6 +1,7 @@
 package ru.geekbrains.springwebappjs.entities;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -9,6 +10,7 @@ import java.time.LocalDateTime;
 import java.util.Collection;
 
 @Entity
+@NoArgsConstructor
 @Data
 @Table(name = "users")
 public class User {
@@ -39,4 +41,9 @@ public class User {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
 }
