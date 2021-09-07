@@ -6,20 +6,35 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.geekbrains.springwebappjs.entities.Role;
 import ru.geekbrains.springwebappjs.entities.User;
+import ru.geekbrains.springwebappjs.repositories.RoleRepository;
 import ru.geekbrains.springwebappjs.repositories.UserRepository;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class UserService implements UserDetailsService {
+    private final String ROLE_USER = "ROLE_USER";
+
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
+
+    public User saveUser(User user) {
+        String userPassword = bCryptPasswordEncoder.encode(user.getPassword());
+        user.setPassword(userPassword);
+        Role role = roleRepository.getRoleByName(ROLE_USER);
+        user.setRoles(Collections.singletonList(role));
+        return userRepository.save(user);
+    }
 
     public Optional<User> findByUsername(String username) {
         return userRepository.findByUsername(username);
