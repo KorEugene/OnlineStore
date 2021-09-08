@@ -1,40 +1,45 @@
 package ru.geekbrains.springwebappjs.services;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.geekbrains.springwebappjs.entities.Cart;
 import ru.geekbrains.springwebappjs.entities.Product;
+import ru.geekbrains.springwebappjs.exceptions.ResourceNotFoundException;
+import ru.geekbrains.springwebappjs.utils.Cart;
 
-import java.util.List;
-import java.util.Optional;
+import javax.annotation.PostConstruct;
 
 @Service
 @RequiredArgsConstructor
 public class CartService {
-
+    private final ProductService productService;
     private Cart cart;
 
-    @Autowired
-    public CartService(Cart cart) {
-        this.cart = cart;
+    @PostConstruct
+    public void init() {
+        this.cart = new Cart();
     }
 
-    public List<Product> getProducts() {
-        return cart.getProductList();
+    public Cart getCartForCurrentUser() {
+        return cart;
     }
 
-    public void addProduct(Product product) {
-        cart.getProductList().add(product);
+    public void addItem(Long productId) {
+        if (cart.add(productId)) {
+            return;
+        }
+        Product product = productService.findById(productId).orElseThrow(() -> new ResourceNotFoundException("Невозможно добавить продукт в корзину, так как продукт с id: " + productId + " не существует"));
+        cart.add(product);
     }
 
-    public void removeProductById(Long id) {
-        Optional<Product> optionalProduct = findProductById(id);
-        optionalProduct.ifPresent(product -> cart.getProductList().remove(product));
+    public void removeItem(Long productId) {
+        cart.remove(productId);
     }
 
-    public Optional<Product> findProductById(Long productId) {
-        return cart.getProductList().stream()
-                .filter(product -> product.getId().equals(productId)).findFirst();
+    public void decrementItem(Long productId) {
+        cart.decrement(productId);
+    }
+
+    public void clearCart() {
+        cart.clear();
     }
 }

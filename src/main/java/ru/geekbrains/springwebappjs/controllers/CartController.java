@@ -1,43 +1,36 @@
 package ru.geekbrains.springwebappjs.controllers;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import ru.geekbrains.springwebappjs.dtos.ProductDto;
-import ru.geekbrains.springwebappjs.exceptions.ResourceNotFoundException;
-import ru.geekbrains.springwebappjs.entities.Category;
-import ru.geekbrains.springwebappjs.entities.Product;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import ru.geekbrains.springwebappjs.services.CartService;
-import ru.geekbrains.springwebappjs.services.CategoryService;
-
-import java.util.List;
-import java.util.stream.Collectors;
+import ru.geekbrains.springwebappjs.utils.Cart;
 
 @RestController
 @RequestMapping("/api/v1/cart")
 @RequiredArgsConstructor
 public class CartController {
     private final CartService cartService;
-    private final CategoryService categoryService;
 
     @GetMapping
-    public List<ProductDto> getProducts() {
-        return cartService.getProducts().stream().map(ProductDto::new).collect(Collectors.toList());
+    public Cart getCartForCurrentUser() {
+        return cartService.getCartForCurrentUser();
     }
 
-    @PostMapping
-    public ResponseEntity<?> addProduct(@RequestBody ProductDto productDto) {
-        Product product = new Product(productDto);
-        Category category = categoryService.findByTitle(productDto.getCategoryTitle()).orElseThrow(() -> new ResourceNotFoundException("Category title = " + productDto.getCategoryTitle() + " not found"));
-        product.setCategory(category);
-        cartService.addProduct(product);
-        return new ResponseEntity<>(HttpStatus.OK);
+    @GetMapping("/add/{productId}")
+    public void addToCart(@PathVariable Long productId) {
+        cartService.addItem(productId);
     }
 
-    @DeleteMapping
-    public ResponseEntity<?> removeProduct(@RequestParam(name = "p") Long id) {
-        cartService.removeProductById(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+    @GetMapping("/decrement/{productId}")
+    public void decrementItem(@PathVariable Long productId) {
+        cartService.decrementItem(productId);
+    }
+
+    @GetMapping("/remove/{productId}")
+    public void removeItem(@PathVariable Long productId) {
+        cartService.removeItem(productId);
     }
 }
