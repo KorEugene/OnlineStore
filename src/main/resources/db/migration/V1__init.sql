@@ -72,3 +72,25 @@ values ('user', '$2a$12$90tN4/VUgeZlgDt7grx48OAH9GM8VkBlcSTrKtC.nVYvmu22Zt.l.', 
 insert into users_roles (user_id, role_id)
 values (1, 1),
        (2, 2);
+
+create table orders
+(
+    id          bigserial primary key,
+    phone       varchar(50) not null,
+    address     varchar(50) not null
+);
+
+create table order_items
+(
+    id                  bigserial primary key,
+    quantity            numeric,
+    pricePerProduct     numeric,
+    price               numeric
+);
+
+--create table order_items_products
+--(
+--    order_item_id bigint not null references order_items (id),
+--    product_id bigint not null references products (id),
+--    CONSTRAINT order_unique UNIQUE (order_item_id, product_id)
+--);
