@@ -24,7 +24,8 @@ public class Order {
     @Column(name = "address")
     private String address;
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "order_id")
     private List<OrderItem> orderItems;
 
     public Order(OrderDetailsDto orderDetailsDto) {

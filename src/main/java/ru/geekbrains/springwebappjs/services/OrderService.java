@@ -2,15 +2,13 @@ package ru.geekbrains.springwebappjs.services;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.geekbrains.springwebappjs.dtos.OrderItemDto;
+import org.springframework.transaction.annotation.Transactional;
 import ru.geekbrains.springwebappjs.entities.Order;
 import ru.geekbrains.springwebappjs.entities.OrderItem;
-import ru.geekbrains.springwebappjs.entities.Product;
 import ru.geekbrains.springwebappjs.repositories.OrderRepository;
 import ru.geekbrains.springwebappjs.utils.Cart;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,10 +19,11 @@ public class OrderService {
     private final CartService cartService;
     private final ProductService productService;
 
+    @Transactional
     public void saveOrder(Order order) {
-//        Cart currentCart = cartService.getCartForCurrentUser();
-//        List<Long> productIds = new ArrayList<>();
-//        currentCart.getItems().forEach(orderItemDto -> productIds.add(orderItemDto.getProductId()));
+        Cart currentCart = cartService.getCartForCurrentUser();
+        List<Long> productIds = new ArrayList<>();
+        currentCart.getItems().forEach(orderItemDto -> productIds.add(orderItemDto.getProductId()));
 
 
         List<OrderItem> orderItems = cartService.getCartForCurrentUser().getItems().stream()
@@ -32,6 +31,7 @@ public class OrderService {
                 .collect(Collectors.toList());
 
         order.setOrderItems(orderItems);
+
         orderRepository.save(order);
     }
 }

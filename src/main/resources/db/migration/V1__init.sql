@@ -83,14 +83,9 @@ create table orders
 create table order_items
 (
     id                  bigserial primary key,
+    order_id            bigint references orders (id),
+    product_id          bigint references products (id),
     quantity            numeric,
-    pricePerProduct     numeric,
+    price_per_product   numeric,
     price               numeric
 );
-
---create table order_items_products
---(
---    order_item_id bigint not null references order_items (id),
---    product_id bigint not null references products (id),
---    CONSTRAINT order_unique UNIQUE (order_item_id, product_id)
---);

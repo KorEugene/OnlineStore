@@ -16,24 +16,23 @@ public class OrderItem {
     @Column(name = "id")
     private Long id;
 
-//    @OneToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "product_id", referencedColumnName = "id")
-//    private Product product;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "product_id", referencedColumnName = "id")
+    private Product product;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    @JoinColumn(name = "order_id", nullable = false)
-    private Order order;
-
+    @Column(name = "quantity")
     private int quantity;
 
+    @Column(name = "price_per_product")
     private int pricePerProduct;
 
+    @Column(name = "price")
     private int price;
 
-//    public OrderItem(Product product, int quantity, int pricePerProduct, int price) {
-//        this.product = product;
-//        this.quantity = quantity;
-//        this.pricePerProduct = pricePerProduct;
-//        this.price = price;
-//    }
+    public OrderItem(Product product, int quantity, int pricePerProduct, int price) {
+        this.product = product;
+        this.quantity = quantity;
+        this.pricePerProduct = pricePerProduct;
+        this.price = price;
+    }
 }

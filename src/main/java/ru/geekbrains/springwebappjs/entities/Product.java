@@ -26,9 +26,6 @@ public class Product {
     @JoinColumn(name = "category_id")
     private Category category;
 
-//    @OneToOne(optional = false, mappedBy="product")
-//    public OrderItem orderItem;
-
     public Product(ProductDto productDto) {
         this.id = productDto.getId();
         this.title = productDto.getTitle();
