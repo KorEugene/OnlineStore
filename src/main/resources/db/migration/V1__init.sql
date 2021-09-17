@@ -72,3 +72,20 @@ values ('user', '$2a$12$90tN4/VUgeZlgDt7grx48OAH9GM8VkBlcSTrKtC.nVYvmu22Zt.l.', 
 insert into users_roles (user_id, role_id)
 values (1, 1),
        (2, 2);
+
+create table orders
+(
+    id          bigserial primary key,
+    phone       varchar(50) not null,
+    address     varchar(50) not null
+);
+
+create table order_items
+(
+    id                  bigserial primary key,
+    order_id            bigint references orders (id),
+    product_id          bigint references products (id),
+    quantity            numeric,
+    price_per_product   numeric,
+    price               numeric
+);
