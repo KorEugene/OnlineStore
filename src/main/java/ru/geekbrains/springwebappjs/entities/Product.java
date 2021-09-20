@@ -2,9 +2,11 @@ package ru.geekbrains.springwebappjs.entities;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ru.geekbrains.springwebappjs.dtos.ProductDto;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "products")
@@ -26,9 +28,11 @@ public class Product {
     @JoinColumn(name = "category_id")
     private Category category;
 
-    public Product(ProductDto productDto) {
-        this.id = productDto.getId();
-        this.title = productDto.getTitle();
-        this.price = productDto.getPrice();
-    }
+    @CreationTimestamp
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+
+    @UpdateTimestamp
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
 }

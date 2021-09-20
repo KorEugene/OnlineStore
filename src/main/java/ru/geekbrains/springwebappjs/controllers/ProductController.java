@@ -7,10 +7,10 @@ import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.springwebappjs.dtos.ProductDto;
-import ru.geekbrains.springwebappjs.exceptions.DataValidationException;
-import ru.geekbrains.springwebappjs.exceptions.ResourceNotFoundException;
 import ru.geekbrains.springwebappjs.entities.Category;
 import ru.geekbrains.springwebappjs.entities.Product;
+import ru.geekbrains.springwebappjs.exceptions.DataValidationException;
+import ru.geekbrains.springwebappjs.exceptions.ResourceNotFoundException;
 import ru.geekbrains.springwebappjs.services.CategoryService;
 import ru.geekbrains.springwebappjs.services.ProductService;
 
@@ -33,8 +33,7 @@ public class ProductController {
 
     @GetMapping("/{id}")
     public ProductDto findById(@PathVariable Long id) {
-        Product product = productService.findById(id).orElseThrow(() -> new ResourceNotFoundException("Product id = " + id + " not found"));
-        return new ProductDto(product);
+        return new ProductDto(productService.findById(id).orElseThrow(() -> new ResourceNotFoundException("Product id = " + id + " not found")));
     }
 
     @PostMapping
@@ -49,11 +48,6 @@ public class ProductController {
         product.setCategory(category);
         productService.save(product);
         return new ProductDto(product);
-    }
-
-    @DeleteMapping
-    public void removeProduct(@RequestParam(name = "p") Long id) {
-        productService.deleteById(id);
     }
 
     @PutMapping

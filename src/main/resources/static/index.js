@@ -30,6 +30,10 @@
                 templateUrl: 'order_confirmation/order_confirmation.html',
                 controller: 'orderConfirmationController'
             })
+            .when('/orders', {
+                templateUrl: 'orders/orders.html',
+                controller: 'ordersController'
+            })
             .when('/registration', {
                 templateUrl: 'registration/registration.html',
                 controller: 'userRegistrationController'
