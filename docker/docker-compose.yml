@@ -10,6 +10,7 @@ services:
       - C:\data\redis
     environment:
       - REDIS_REPLICATION_MODE=master
+    restart: always
     networks:
       node_net:
         ipv4_address: 172.28.1.4
