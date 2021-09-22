@@ -12,6 +12,7 @@ import ru.geekbrains.springwebappjs.exceptions.ResourceNotFoundException;
 import ru.geekbrains.springwebappjs.repositories.OrderRepository;
 import ru.geekbrains.springwebappjs.utils.Cart;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,9 +25,9 @@ public class OrderService {
     private final ProductService productService;
 
     @Transactional
-    public void createOrder(String username, OrderDetailsDto orderDetailsDto) {
-        User user = userService.findByUsername(username).orElseThrow(() -> new ResourceNotFoundException("Не удалось найти пользователя при оформлении заказа. Имя пользователя: " + username));
-        Cart cart = cartService.getCartForCurrentUser();
+    public void createOrder(Principal principal, OrderDetailsDto orderDetailsDto) {
+        User user = userService.findByUsername(principal.getName()).orElseThrow(() -> new ResourceNotFoundException("Не удалось найти пользователя при оформлении заказа. Имя пользователя: " + principal.getName()));
+        Cart cart = cartService.getCartForCurrentUser(principal, null);
         Order order = new Order();
         order.setUser(user);
         order.setPrice(cart.getTotalPrice());
@@ -44,7 +45,7 @@ public class OrderService {
         }
         order.setItems(items);
         orderRepository.save(order);
-        cartService.clearCart();
+        cartService.clearCart(principal, null);
     }
 
     public List<Order> findAllByUsername(String username) {

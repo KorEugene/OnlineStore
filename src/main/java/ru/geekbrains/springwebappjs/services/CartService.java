@@ -7,54 +7,82 @@ import ru.geekbrains.springwebappjs.entities.Product;
 import ru.geekbrains.springwebappjs.exceptions.ResourceNotFoundException;
 import ru.geekbrains.springwebappjs.utils.Cart;
 
+import java.security.Principal;
+
 @Service
 @RequiredArgsConstructor
 public class CartService {
     private final ProductService productService;
     private final RedisTemplate<String, Object> redisTemplate;
 
-    public Cart getCartForCurrentUser() {
-        if (!redisTemplate.hasKey("cart")) {
-            redisTemplate.opsForValue().set("cart", new Cart());
+    private static final String REDIS_CART_PREFIX = "WEB_APP_MARKET_CART_";
+
+    private String getCartKey(Principal principal, String uuid) {
+        if (principal != null) {
+            return REDIS_CART_PREFIX + principal.getName();
         }
-        Cart cart = (Cart) redisTemplate.opsForValue().get("cart");
+        return REDIS_CART_PREFIX + uuid;
+    }
+
+    public Cart getCartForCurrentUser(Principal principal, String uuid) {
+        String cartKey = getCartKey(principal, uuid);
+        if (!redisTemplate.hasKey(cartKey)) {
+            redisTemplate.opsForValue().set(cartKey, new Cart());
+        }
+        Cart cart = (Cart) redisTemplate.opsForValue().get(cartKey);
         return cart;
     }
 
-    public void updateCart(Cart cart) {
-        redisTemplate.opsForValue().set("cart", cart);
+    public Cart getCartByKey(String key) {
+        if (!redisTemplate.hasKey(REDIS_CART_PREFIX + key)) {
+            redisTemplate.opsForValue().set(REDIS_CART_PREFIX + key, new Cart());
+        }
+        return (Cart) redisTemplate.opsForValue().get(REDIS_CART_PREFIX + key);
     }
 
-    public void addItem(Long productId) {
-        Cart cart = getCartForCurrentUser();
+    public void updateCart(Principal principal, String uuid, Cart cart) {
+        String cartKey = getCartKey(principal, uuid);
+        redisTemplate.opsForValue().set(cartKey, cart);
+    }
+
+    public void updateCartByKey(String key, Cart cart) {
+        redisTemplate.opsForValue().set(REDIS_CART_PREFIX + key, cart);
+    }
+
+    public void addItem(Principal principal, String uuid, Long productId) {
+        Cart cart = getCartForCurrentUser(principal, uuid);
         if (cart.add(productId)) {
-            updateCart(cart);
+            updateCart(principal, uuid, cart);
             return;
         }
         Product product = productService.findById(productId).orElseThrow(() -> new ResourceNotFoundException("Невозможно добавить продукт в корзину, так как продукт с id: " + productId + " не существует"));
         cart.add(product);
-        updateCart(cart);
+        updateCart(principal, uuid, cart);
     }
 
-    public void removeItem(Long productId) {
-        Cart cart = getCartForCurrentUser();
+    public void removeItem(Principal principal, String uuid, Long productId) {
+        Cart cart = getCartForCurrentUser(principal, uuid);
         cart.remove(productId);
-        updateCart(cart);
+        updateCart(principal, uuid, cart);
     }
 
-    public void decrementItem(Long productId) {
-        Cart cart = getCartForCurrentUser();
+    public void decrementItem(Principal principal, String uuid, Long productId) {
+        Cart cart = getCartForCurrentUser(principal, uuid);
         cart.decrement(productId);
-        updateCart(cart);
+        updateCart(principal, uuid, cart);
     }
 
-    public void clearCart() {
-        Cart cart = getCartForCurrentUser();
+    public void clearCart(Principal principal, String uuid) {
+        Cart cart = getCartForCurrentUser(principal, uuid);
         cart.clear();
-        updateCart(cart);
+        updateCart(principal, uuid, cart);
     }
 
-    public boolean isCartExists() {
-        return redisTemplate.hasKey("cart");
+    public void merge(Principal principal, String uuid) {
+        Cart guestCart = getCartByKey(uuid);
+        Cart userCart = getCartByKey(principal.getName());
+        userCart.merge(guestCart);
+        updateCartByKey(principal.getName(), userCart);
+        updateCartByKey(uuid, guestCart);
     }
 }
