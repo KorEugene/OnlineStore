@@ -2,7 +2,7 @@ package ru.geekbrains.springwebappjs.utils;
 
 import lombok.Data;
 import ru.geekbrains.springwebappjs.dtos.OrderItemDto;
-import ru.geekbrains.springwebappjs.entities.Product;
+import ru.geekbrains.springwebappjs.entities.ProductEntity;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -28,8 +28,8 @@ public class Cart {
         return false;
     }
 
-    public void add(Product product) {
-        items.add(new OrderItemDto(product));
+    public void add(ProductEntity productEntity) {
+        items.add(new OrderItemDto(productEntity));
         recalculate();
     }
 

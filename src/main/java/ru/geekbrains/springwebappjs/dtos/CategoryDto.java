@@ -17,6 +17,6 @@ public class CategoryDto {
     public CategoryDto(Category category) {
         this.id = category.getId();
         this.title = category.getTitle();
-        this.products = category.getProducts().stream().map(ProductDto::new).collect(Collectors.toList());
+        this.products = category.getProductEntities().stream().map(ProductDto::new).collect(Collectors.toList());
     }
 }

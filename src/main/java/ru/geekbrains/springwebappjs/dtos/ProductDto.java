@@ -3,7 +3,7 @@ package ru.geekbrains.springwebappjs.dtos;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
-import ru.geekbrains.springwebappjs.entities.Product;
+import ru.geekbrains.springwebappjs.entities.ProductEntity;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -23,10 +23,10 @@ public class ProductDto {
     @NotNull(message = "Товар должен иметь категорию")
     private String categoryTitle;
 
-    public ProductDto(Product product) {
-        this.id = product.getId();
-        this.title = product.getTitle();
-        this.price = product.getPrice();
-        this.categoryTitle = product.getCategory().getTitle();
+    public ProductDto(ProductEntity productEntity) {
+        this.id = productEntity.getId();
+        this.title = productEntity.getTitle();
+        this.price = productEntity.getPrice();
+        this.categoryTitle = productEntity.getCategory().getTitle();
     }
 }

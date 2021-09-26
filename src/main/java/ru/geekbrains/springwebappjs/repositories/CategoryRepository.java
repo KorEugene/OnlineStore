@@ -11,6 +11,6 @@ import java.util.Optional;
 public interface CategoryRepository extends JpaRepository<Category, Long> {
     Optional<Category> findByTitle(String title);
 
-    @Query("select c from Category c join fetch c.products where c.id = :id")
+    @Query("select c from Category c join fetch c.productEntities where c.id = :id")
     Optional<Category> findByIdWithProducts(Long id);
 }

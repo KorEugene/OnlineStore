@@ -3,7 +3,7 @@ package ru.geekbrains.springwebappjs.dtos;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.geekbrains.springwebappjs.entities.OrderItem;
-import ru.geekbrains.springwebappjs.entities.Product;
+import ru.geekbrains.springwebappjs.entities.ProductEntity;
 
 @Data
 @NoArgsConstructor
@@ -14,17 +14,17 @@ public class OrderItemDto {
     private int pricePerProduct;
     private int price;
 
-    public OrderItemDto(Product product) {
-        this.productId = product.getId();
-        this.productTitle = product.getTitle();
+    public OrderItemDto(ProductEntity productEntity) {
+        this.productId = productEntity.getId();
+        this.productTitle = productEntity.getTitle();
         this.quantity = 1;
-        this.price = product.getPrice();
-        this.pricePerProduct = product.getPrice();
+        this.price = productEntity.getPrice();
+        this.pricePerProduct = productEntity.getPrice();
     }
 
     public OrderItemDto(OrderItem orderItem) {
-        this.productId = orderItem.getProduct().getId();
-        this.productTitle = orderItem.getProduct().getTitle();
+        this.productId = orderItem.getProductEntity().getId();
+        this.productTitle = orderItem.getProductEntity().getTitle();
         this.quantity = orderItem.getQuantity();
         this.price = orderItem.getPrice();
         this.pricePerProduct = orderItem.getPricePerProduct();
