@@ -6,7 +6,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.geekbrains.springwebappjs.dtos.ProductDto;
-import ru.geekbrains.springwebappjs.entities.Category;
+import ru.geekbrains.springwebappjs.entities.CategoryEntity;
 import ru.geekbrains.springwebappjs.entities.ProductEntity;
 import ru.geekbrains.springwebappjs.exceptions.ResourceNotFoundException;
 import ru.geekbrains.springwebappjs.repositories.ProductRepository;
@@ -41,9 +41,9 @@ public class ProductService {
         ProductEntity productEntity = findById(productDto.getId()).orElseThrow(() -> new ResourceNotFoundException("Product id = " + productDto.getId() + " not found"));
         productEntity.setPrice(productDto.getPrice());
         productEntity.setTitle(productDto.getTitle());
-        if (!productEntity.getCategory().getTitle().equals(productDto.getCategoryTitle())) {
-            Category category = categoryService.findByTitle(productDto.getCategoryTitle()).orElseThrow(() -> new ResourceNotFoundException("Category title = " + productDto.getCategoryTitle() + " not found"));
-            productEntity.setCategory(category);
+        if (!productEntity.getCategoryEntity().getTitle().equals(productDto.getCategoryTitle())) {
+            CategoryEntity categoryEntity = categoryService.findByTitle(productDto.getCategoryTitle()).orElseThrow(() -> new ResourceNotFoundException("Category title = " + productDto.getCategoryTitle() + " not found"));
+            productEntity.setCategoryEntity(categoryEntity);
         }
     }
 

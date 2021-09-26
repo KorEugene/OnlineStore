@@ -27,6 +27,6 @@ public class ProductDto {
         this.id = productEntity.getId();
         this.title = productEntity.getTitle();
         this.price = productEntity.getPrice();
-        this.categoryTitle = productEntity.getCategory().getTitle();
+        this.categoryTitle = productEntity.getCategoryEntity().getTitle();
     }
 }

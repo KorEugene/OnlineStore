@@ -1,6 +1,7 @@
 package ru.geekbrains.springwebappjs.utils;
 
 import ru.geekbrains.springwebappjs.entities.ProductEntity;
+import ru.geekbrains.springwebappjs.soap.categories.Category;
 import ru.geekbrains.springwebappjs.soap.products.Product;
 
 public class SOAPConverter {
@@ -13,7 +14,10 @@ public class SOAPConverter {
         product.setId(pe.getId());
         product.setTitle(pe.getTitle());
         product.setPrice(pe.getPrice());
-        product.setCategoryName(pe.getCategory().getTitle());
+        Category category = new Category();
+        category.setId(pe.getCategoryEntity().getId());
+        category.setTitle(pe.getCategoryEntity().getTitle());
+        product.setCategory(category);
         return product;
     }
 }

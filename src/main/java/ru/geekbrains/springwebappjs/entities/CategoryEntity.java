@@ -13,7 +13,7 @@ import java.util.List;
 @Table(name = "categories")
 @Data
 @NoArgsConstructor
-public class Category {
+public class CategoryEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -22,7 +22,7 @@ public class Category {
     @Column(name = "title")
     private String title;
 
-    @OneToMany(mappedBy = "category")
+    @OneToMany(mappedBy = "categoryEntity")
     private List<ProductEntity> productEntities;
 
     @CreationTimestamp

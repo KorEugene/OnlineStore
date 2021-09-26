@@ -5,5 +5,5 @@
 // Generated on: 2021.09.26 at 11:46:35 PM MSK 
 //
 
-@javax.xml.bind.annotation.XmlSchema(namespace = "http://www.geekbrains.ru/springwebappjs/products", elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED)
-package ru.geekbrains.springwebappjs.soap.products;
+@javax.xml.bind.annotation.XmlSchema(namespace = "http://www.geekbrains.ru/springwebappjs/categories", elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED)
+package ru.geekbrains.springwebappjs.soap.categories;

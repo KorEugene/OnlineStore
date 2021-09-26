@@ -26,7 +26,7 @@ public class ProductEntity {
 
     @ManyToOne
     @JoinColumn(name = "category_id")
-    private Category category;
+    private CategoryEntity categoryEntity;
 
     @CreationTimestamp
     @Column(name = "created_at")

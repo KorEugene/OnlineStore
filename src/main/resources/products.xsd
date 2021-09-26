@@ -2,7 +2,10 @@
 <xs:schema
         xmlns:xs="http://www.w3.org/2001/XMLSchema"
         xmlns:tns="http://www.geekbrains.ru/springwebappjs/products"
+        xmlns:st="http://www.geekbrains.ru/springwebappjs/categories"
         targetNamespace="http://www.geekbrains.ru/springwebappjs/products" elementFormDefault="qualified">
+
+    <xs:import schemaLocation="categories.xsd" namespace="http://www.geekbrains.ru/springwebappjs/categories"/>
 
     <xs:element name="getProductByIdRequest">
         <xs:complexType>
@@ -19,7 +22,7 @@
     <xs:element name="getProductByIdResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="productEntity" type="tns:productEntity"/>
+                <xs:element name="product" type="tns:product"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -27,17 +30,17 @@
     <xs:element name="getAllProductsResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="products" maxOccurs="unbounded" type="tns:productEntity"/>
+                <xs:element name="products" maxOccurs="unbounded" type="tns:product"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
 
-    <xs:complexType name="productEntity">
+    <xs:complexType name="product">
         <xs:sequence>
             <xs:element name="id" type="xs:long"/>
             <xs:element name="title" type="xs:string"/>
             <xs:element name="price" type="xs:int"/>
-            <xs:element name="categoryName" type="xs:string"/>
+            <xs:element name="category" type="st:category" />
         </xs:sequence>
     </xs:complexType>
 </xs:schema>

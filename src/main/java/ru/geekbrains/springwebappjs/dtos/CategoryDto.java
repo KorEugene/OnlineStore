@@ -2,7 +2,7 @@ package ru.geekbrains.springwebappjs.dtos;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ru.geekbrains.springwebappjs.entities.Category;
+import ru.geekbrains.springwebappjs.entities.CategoryEntity;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -14,9 +14,9 @@ public class CategoryDto {
     private String title;
     private List<ProductDto> products;
 
-    public CategoryDto(Category category) {
-        this.id = category.getId();
-        this.title = category.getTitle();
-        this.products = category.getProductEntities().stream().map(ProductDto::new).collect(Collectors.toList());
+    public CategoryDto(CategoryEntity categoryEntity) {
+        this.id = categoryEntity.getId();
+        this.title = categoryEntity.getTitle();
+        this.products = categoryEntity.getProductEntities().stream().map(ProductDto::new).collect(Collectors.toList());
     }
 }

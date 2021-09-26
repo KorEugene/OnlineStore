@@ -6,26 +6,27 @@
 //
 
 
-package ru.geekbrains.springwebappjs.soap.products;
+package ru.geekbrains.springwebappjs.soap.categories;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for anonymous complex type.
+ * <p>Java class for category complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType&gt;
+ * &lt;complexType name="category"&gt;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
- *         &lt;element name="productEntity" type="{http://www.geekbrains.ru/springwebappjs/products}productEntity"/&gt;
+ *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}long"/&gt;
+ *         &lt;element name="title" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="products" type="{http://www.geekbrains.ru/springwebappjs/products}productEntity" maxOccurs="unbounded"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -35,37 +36,54 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-        "product"
+@XmlType(name = "category", propOrder = {
+    "id",
+    "title"
 })
-@XmlRootElement(name = "getProductByIdResponse")
-public class GetProductByIdResponse {
+public class Category {
 
+    protected long id;
     @XmlElement(required = true)
-    protected Product product;
+    protected String title;
 
     /**
-     * Gets the value of the productEntity property.
+     * Gets the value of the id property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Product }
-     *     
      */
-    public Product getProduct() {
-        return product;
+    public long getId() {
+        return id;
     }
 
     /**
-     * Sets the value of the productEntity property.
+     * Sets the value of the id property.
+     * 
+     */
+    public void setId(long value) {
+        this.id = value;
+    }
+
+    /**
+     * Gets the value of the title property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getTitle() {
+        return title;
+    }
+
+    /**
+     * Sets the value of the title property.
      * 
      * @param value
      *     allowed object is
-     *     {@link Product }
+     *     {@link String }
      *     
      */
-    public void setProduct(Product value) {
-        this.product = value;
+    public void setTitle(String value) {
+        this.title = value;
     }
 
 }

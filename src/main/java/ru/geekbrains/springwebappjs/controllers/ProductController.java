@@ -7,7 +7,7 @@ import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.springwebappjs.dtos.ProductDto;
-import ru.geekbrains.springwebappjs.entities.Category;
+import ru.geekbrains.springwebappjs.entities.CategoryEntity;
 import ru.geekbrains.springwebappjs.entities.ProductEntity;
 import ru.geekbrains.springwebappjs.exceptions.DataValidationException;
 import ru.geekbrains.springwebappjs.exceptions.ResourceNotFoundException;
@@ -44,8 +44,8 @@ public class ProductController {
         ProductEntity productEntity = new ProductEntity();
         productEntity.setPrice(productDto.getPrice());
         productEntity.setTitle(productDto.getTitle());
-        Category category = categoryService.findByTitle(productDto.getCategoryTitle()).orElseThrow(() -> new ResourceNotFoundException("Category title = " + productDto.getCategoryTitle() + " not found"));
-        productEntity.setCategory(category);
+        CategoryEntity categoryEntity = categoryService.findByTitle(productDto.getCategoryTitle()).orElseThrow(() -> new ResourceNotFoundException("Category title = " + productDto.getCategoryTitle() + " not found"));
+        productEntity.setCategoryEntity(categoryEntity);
         productService.save(productEntity);
         return new ProductDto(productEntity);
     }
