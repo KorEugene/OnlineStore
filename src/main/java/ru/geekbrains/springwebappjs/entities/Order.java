@@ -22,7 +22,7 @@ import java.util.List;
                 @NamedSubgraph(
                         name = "items-products",
                         attributeNodes = {
-                                @NamedAttributeNode("product")
+                                @NamedAttributeNode("productEntity")
                         }
                 )
         }

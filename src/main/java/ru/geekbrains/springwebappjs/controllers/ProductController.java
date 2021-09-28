@@ -7,8 +7,8 @@ import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.springwebappjs.dtos.ProductDto;
-import ru.geekbrains.springwebappjs.entities.Category;
-import ru.geekbrains.springwebappjs.entities.Product;
+import ru.geekbrains.springwebappjs.entities.CategoryEntity;
+import ru.geekbrains.springwebappjs.entities.ProductEntity;
 import ru.geekbrains.springwebappjs.exceptions.DataValidationException;
 import ru.geekbrains.springwebappjs.exceptions.ResourceNotFoundException;
 import ru.geekbrains.springwebappjs.services.CategoryService;
@@ -41,13 +41,13 @@ public class ProductController {
         if (bindingResult.hasErrors()) {
             throw new DataValidationException(bindingResult.getAllErrors().stream().map(ObjectError::getDefaultMessage).collect(Collectors.toList()));
         }
-        Product product = new Product();
-        product.setPrice(productDto.getPrice());
-        product.setTitle(productDto.getTitle());
-        Category category = categoryService.findByTitle(productDto.getCategoryTitle()).orElseThrow(() -> new ResourceNotFoundException("Category title = " + productDto.getCategoryTitle() + " not found"));
-        product.setCategory(category);
-        productService.save(product);
-        return new ProductDto(product);
+        ProductEntity productEntity = new ProductEntity();
+        productEntity.setPrice(productDto.getPrice());
+        productEntity.setTitle(productDto.getTitle());
+        CategoryEntity categoryEntity = categoryService.findByTitle(productDto.getCategoryTitle()).orElseThrow(() -> new ResourceNotFoundException("Category title = " + productDto.getCategoryTitle() + " not found"));
+        productEntity.setCategoryEntity(categoryEntity);
+        productService.save(productEntity);
+        return new ProductDto(productEntity);
     }
 
     @PutMapping

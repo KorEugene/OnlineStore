@@ -24,6 +24,14 @@ networks:
         - subnet: 172.28.0.0/16
 
 ### Another variant
+#services:
+#  redis:
+#    image: redis:latest
+#    container_name: my-redis
+#    ports:
+#      - "6379:6379"
+
+### Another variant
 #version: '3.8'
 #
 #services:

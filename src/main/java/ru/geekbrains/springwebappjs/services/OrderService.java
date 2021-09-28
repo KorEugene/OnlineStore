@@ -40,7 +40,7 @@ public class OrderService {
             orderItem.setPrice(i.getPrice());
             orderItem.setPricePerProduct(i.getPricePerProduct());
             orderItem.setQuantity(i.getQuantity());
-            orderItem.setProduct(productService.findById(i.getProductId()).orElseThrow(() -> new ResourceNotFoundException("Не удалось найти продукт при оформлении заказа. ID продукта: " + i.getProductId())));
+            orderItem.setProductEntity(productService.findById(i.getProductId()).orElseThrow(() -> new ResourceNotFoundException("Не удалось найти продукт при оформлении заказа. ID продукта: " + i.getProductId())));
             items.add(orderItem);
         }
         order.setItems(items);

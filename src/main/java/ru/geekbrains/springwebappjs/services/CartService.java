@@ -3,7 +3,7 @@ package ru.geekbrains.springwebappjs.services;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
-import ru.geekbrains.springwebappjs.entities.Product;
+import ru.geekbrains.springwebappjs.entities.ProductEntity;
 import ru.geekbrains.springwebappjs.exceptions.ResourceNotFoundException;
 import ru.geekbrains.springwebappjs.utils.Cart;
 
@@ -55,8 +55,8 @@ public class CartService {
             updateCart(principal, uuid, cart);
             return;
         }
-        Product product = productService.findById(productId).orElseThrow(() -> new ResourceNotFoundException("Невозможно добавить продукт в корзину, так как продукт с id: " + productId + " не существует"));
-        cart.add(product);
+        ProductEntity productEntity = productService.findById(productId).orElseThrow(() -> new ResourceNotFoundException("Невозможно добавить продукт в корзину, так как продукт с id: " + productId + " не существует"));
+        cart.add(productEntity);
         updateCart(principal, uuid, cart);
     }
 
