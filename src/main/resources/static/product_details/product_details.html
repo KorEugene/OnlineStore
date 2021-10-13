@@ -1,14 +1,32 @@
 <div class="container">
     <p></p>
     <h3>Информация о продукте</h3>
-    <p>{{'Название: ' + productsDetails.title}}</p>
-    <p>{{'Цена: ' + productsDetails.price}}</p>
-    <p>{{'Категория: ' + productsDetails.categoryTitle}}</p>
+    <p>{{'Название: ' + productDetails.title}}</p>
+    <p>{{'Цена: ' + productDetails.price}}</p>
+    <p>{{'Категория: ' + productDetails.categoryTitle}}</p>
 
     <button class="btn btn-primary" ng-click="navToProductsCatalog()">Назад</button>
 
     <br/>
     <br/>
     <br/>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <td>Пользователь</td>
+            <td>Дата</td>
+            <td>Комментарий</td>
+            <td></td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="i in productDetails.commentList">
+            <td>{{i.username}}</td>
+            <td>{{i.createdAt}}</td>
+            <td>{{i.content}}</td>
+        </tr>
+        </tbody>
+    </table>
 
 </div>

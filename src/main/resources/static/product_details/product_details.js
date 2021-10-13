@@ -2,10 +2,10 @@ angular.module('market-front').controller('productDetailsController', function (
     const contextPath = 'http://localhost:8189/market/';
 
     $scope.loadProduct = function () {
-        $http.get(contextPath + 'api/v1/products/' + $routeParams.productId)
+        $http.get(contextPath + 'api/v1/products/' + $routeParams.productId + '/details')
         .then(function (response) {
             console.log(response);
-            $scope.productsDetails = response.data;
+            $scope.productDetails = response.data;
         });
     };
 

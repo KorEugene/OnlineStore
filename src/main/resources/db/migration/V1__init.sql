@@ -67,6 +67,15 @@ create table users_roles
     primary key (user_id, role_id)
 );
 
+create table commentaries
+(
+    id          bigserial primary key,
+    content     varchar(255),
+    user_id     bigint references users (id),
+    product_id  bigint references products (id),
+    created_at  timestamp default current_timestamp
+);
+
 insert into roles (name)
 values ('ROLE_USER'),
        ('ROLE_ADMIN');
@@ -107,3 +116,6 @@ values (1, '1111', '1111', 100);
 
 insert into order_items (order_id, product_id, quantity, price_per_product, price)
 values (1, 1, 4, 25, 100);
+
+insert into commentaries (content, user_id, product_id)
+values ('Good!', 1, 1);

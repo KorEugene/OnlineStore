@@ -7,6 +7,8 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.MultiValueMap;
+import ru.geekbrains.springwebappjs.dtos.CommentResponseDto;
+import ru.geekbrains.springwebappjs.dtos.ProductDetailsDto;
 import ru.geekbrains.springwebappjs.dtos.ProductDto;
 import ru.geekbrains.springwebappjs.entities.CategoryEntity;
 import ru.geekbrains.springwebappjs.entities.ProductEntity;
@@ -36,6 +38,18 @@ public class ProductService {
 
     public Optional<ProductEntity> findById(Long id) {
         return productRepository.findById(id);
+    }
+
+    @Transactional
+    public ProductDetailsDto findByIdWithDetails(Long id) {
+        ProductEntity product = productRepository.findById(id).orElseGet(ProductEntity::new);
+
+        ProductDetailsDto productDetailsDto = new ProductDetailsDto();
+        productDetailsDto.setTitle(product.getTitle());
+        productDetailsDto.setPrice(product.getPrice());
+        productDetailsDto.setCategoryTitle(product.getCategoryEntity().getTitle());
+        productDetailsDto.setCommentList(product.getComments().stream().map(CommentResponseDto::new).collect(Collectors.toList()));
+        return productDetailsDto;
     }
 
     public ProductEntity save(ProductEntity productEntity) {
