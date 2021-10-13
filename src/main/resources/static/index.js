@@ -14,13 +14,13 @@
                 templateUrl: 'store/store.html',
                 controller: 'storeController'
             })
-            .when('/edit_product/:productId', {
-                templateUrl: 'edit_product/edit_product.html',
-                controller: 'editProductController'
-            })
-            .when('/create_product', {
-                templateUrl: 'create_product/create_product.html',
-                controller: 'createProductController'
+            // .when('/edit_product/:productId', {
+            //     templateUrl: 'edit_product/edit_product.html',
+            //     controller: 'editProductController'
+            // })
+            .when('/admin', {
+                templateUrl: 'admin/admin.html',
+                controller: 'adminController'
             })
             .when('/cart', {
                 templateUrl: 'cart/cart.html',
@@ -30,9 +30,9 @@
                 templateUrl: 'order_confirmation/order_confirmation.html',
                 controller: 'orderConfirmationController'
             })
-            .when('/orders', {
-                templateUrl: 'orders/orders.html',
-                controller: 'ordersController'
+            .when('/profile', {
+                templateUrl: 'profile/profile.html',
+                controller: 'profileController'
             })
             .when('/registration', {
                 templateUrl: 'registration/registration.html',
@@ -90,6 +90,7 @@ angular.module('market-front').controller('indexController', function ($rootScop
         if ($scope.user.password) {
             $scope.user.password = null;
         }
+        $location.path('/');
     };
 
     $scope.clearUser = function () {

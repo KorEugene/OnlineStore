@@ -43,6 +43,8 @@ values ('Bread', 25, 1),
 create table users
 (
     id         bigserial primary key,
+    first_name varchar(80) not null,
+    last_name  varchar(80) not null,
     username   varchar(30) not null,
     password   varchar(80) not null,
     email      varchar(50) unique,
@@ -69,9 +71,9 @@ insert into roles (name)
 values ('ROLE_USER'),
        ('ROLE_ADMIN');
 
-insert into users (username, password, email)
-values ('user', '$2a$12$90tN4/VUgeZlgDt7grx48OAH9GM8VkBlcSTrKtC.nVYvmu22Zt.l.', 'user@gmail.com'), -- user/user
-       ('admin', '$2a$12$Lyiu7NVkcCPZ8bhuPNwtdubWz4nkuR75UG1sz2pqE44LCS9O2fY1u', 'admin@gmail.com'); -- admin/admin
+insert into users (username, first_name, last_name, password, email)
+values ('user', 'Bob', 'Johnson', '$2a$12$90tN4/VUgeZlgDt7grx48OAH9GM8VkBlcSTrKtC.nVYvmu22Zt.l.', 'user@gmail.com'), -- user/user
+       ('admin', 'John', 'Johnson', '$2a$12$Lyiu7NVkcCPZ8bhuPNwtdubWz4nkuR75UG1sz2pqE44LCS9O2fY1u', 'admin@gmail.com'); -- admin/admin
 
 insert into users_roles (user_id, role_id)
 values (1, 1),
