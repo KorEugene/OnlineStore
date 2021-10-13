@@ -22,3 +22,6 @@ spring:
 jwt:
   secret: $2a$12$kf9uksIpWh.pV3c/yyqI2.hiL8n9Nntq80vsA5H6ypGaAQ2fexAJq # 'secret' by bcrypt
   lifetime: 36000000
+utils:
+  cart:
+    prefix: WEB_MARKET_

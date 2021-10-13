@@ -27,7 +27,7 @@ public class OrderService {
     @Transactional
     public void createOrder(Principal principal, OrderDetailsDto orderDetailsDto) {
         User user = userService.findByUsername(principal.getName()).orElseThrow(() -> new ResourceNotFoundException("Не удалось найти пользователя при оформлении заказа. Имя пользователя: " + principal.getName()));
-        Cart cart = cartService.getCartForCurrentUser(principal, null);
+        Cart cart = cartService.getCurrentCart(cartService.getCartUuidFromSuffix(user.getUsername()));
         Order order = new Order();
         order.setUser(user);
         order.setPrice(cart.getTotalPrice());
@@ -45,7 +45,8 @@ public class OrderService {
         }
         order.setItems(items);
         orderRepository.save(order);
-        cartService.clearCart(principal, null);
+        cart.clear();
+        cartService.updateCart(cartService.getCartUuidFromSuffix(user.getUsername()), cart);
     }
 
     public List<Order> findAllByUsername(String username) {
