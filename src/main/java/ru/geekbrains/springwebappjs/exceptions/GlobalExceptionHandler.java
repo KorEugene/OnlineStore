@@ -17,4 +17,9 @@ public class GlobalExceptionHandler {
     public ResponseEntity<?> catchValidationException(DataValidationException e) {
         return new ResponseEntity<>(new MarketError(e.getMessages()), HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler
+    public ResponseEntity<?> catchOwnerValidationException(OwnerValidationException e) {
+        return new ResponseEntity<>(new MarketError(e.getMessage()), HttpStatus.BAD_REQUEST);
+    }
 }

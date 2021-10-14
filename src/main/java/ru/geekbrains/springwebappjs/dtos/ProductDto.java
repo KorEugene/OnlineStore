@@ -14,7 +14,7 @@ public class ProductDto {
     private Long id;
 
     @NotNull(message = "Товар должен иметь название")
-    @Length(min = 3, max = 255, message = "Длина названия товара должна составляет 3-255 символов")
+    @Length(min = 3, max = 255, message = "Длина названия товара должна составлять 3-255 символов")
     private String title;
 
     @Min(value = 1, message = "Цена товара не может быть менее 1 руб.")

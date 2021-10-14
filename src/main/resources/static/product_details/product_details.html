@@ -29,4 +29,14 @@
         </tbody>
     </table>
 
+    <br/>
+    <br/>
+    <br/>
+
+    <input class="form-control" type="text" placeholder="Комментарий" ng-model="new_comment.content">
+    <p></p>
+    <button ng-click="createComment(new_comment.content)" ng-show="isUserLoggedIn()" class="btn btn-primary">Добавить комментарий</button>
+    <button ng-click="disabledCheckOut()" ng-show="!isUserLoggedIn()" class="btn btn-primary">Добавить комментарий
+    </button>
+
 </div>

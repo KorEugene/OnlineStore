@@ -11,10 +11,4 @@ import java.util.Optional;
 @Repository
 public interface ProductRepository extends JpaRepository<ProductEntity, Long>, JpaSpecificationExecutor<ProductEntity> {
     Optional<ProductEntity> findByTitle(String title);
-
-//    @Query("select p from ProductEntity p join fetch p.categoryEntity ce join fetch p.comments c join fetch c.user u where p.id = :id")
-//    ProductEntity findByIdWithAllDetails(Long id);
-
-//    @Query("select p.title, p.price, p.categoryEntity.title, p.comments from ProductEntity p where p.id = :id")
-//    ProductEntity findByIdWithAllDetails(Long id);
 }
