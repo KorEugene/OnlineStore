@@ -7,6 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import ru.geekbrains.springwebappjs.dtos.ProductDetailsDto;
 import ru.geekbrains.springwebappjs.dtos.ProductDto;
 import ru.geekbrains.springwebappjs.entities.CategoryEntity;
 import ru.geekbrains.springwebappjs.entities.ProductEntity;
@@ -38,6 +39,11 @@ public class ProductController {
     @GetMapping("/{id}")
     public ProductDto findById(@PathVariable Long id) {
         return new ProductDto(productService.findById(id).orElseThrow(() -> new ResourceNotFoundException("Product id = " + id + " not found")));
+    }
+
+    @GetMapping("/{id}/details")
+    public ProductDetailsDto findByIdWithDetails(@PathVariable Long id) {
+        return productService.findByIdWithDetails(id);
     }
 
     @PostMapping

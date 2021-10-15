@@ -18,6 +18,10 @@
             //     templateUrl: 'edit_product/edit_product.html',
             //     controller: 'editProductController'
             // })
+            .when('/product_details/:productId', {
+                templateUrl: 'product_details/product_details.html',
+                controller: 'productDetailsController'
+            })
             .when('/admin', {
                 templateUrl: 'admin/admin.html',
                 controller: 'adminController'

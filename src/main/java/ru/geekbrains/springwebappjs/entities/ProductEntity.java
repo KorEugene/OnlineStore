@@ -7,6 +7,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "products")
@@ -27,6 +28,9 @@ public class ProductEntity {
     @ManyToOne
     @JoinColumn(name = "category_id")
     private CategoryEntity categoryEntity;
+
+    @OneToMany(mappedBy = "productEntity")
+    private List<Comment> comments;
 
     @CreationTimestamp
     @Column(name = "created_at")

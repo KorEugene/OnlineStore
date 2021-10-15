@@ -36,6 +36,10 @@ angular.module('market-front').controller('storeController', function ($scope, $
         return arr;
     }
 
+    $scope.navToProductDetailsPage = function (productId) {
+        $location.path('/product_details/' + productId);
+    }
+
     $scope.navToEditProductPage = function (productId) {
         $location.path('/edit_product/' + productId);
     }
