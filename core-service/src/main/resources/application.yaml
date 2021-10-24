@@ -1,0 +1,27 @@
+server:
+  port: 8189
+  servlet:
+    context-path: /market-core
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5433/postgres
+    username: postgres
+    password: postgres
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQL94Dialect
+    open-in-view: false
+  h2:
+    console:
+      enabled: true
+      settings:
+        web-allow-others: false
+jwt:
+  secret: $2a$12$kf9uksIpWh.pV3c/yyqI2.hiL8n9Nntq80vsA5H6ypGaAQ2fexAJq # 'secret' by bcrypt
+  lifetime: 36000000
+integration:
+  cart-service:
+    url: http://localhost:8191/market-cart
