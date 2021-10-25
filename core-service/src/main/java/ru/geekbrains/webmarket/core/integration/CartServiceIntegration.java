@@ -20,21 +20,15 @@ public class CartServiceIntegration {
     @Value("${integration.cart-service.url}")
     private String cartServiceUrl;
 
-    public CartDto getUserCartDto(Principal principal) {
-        if (principal == null) {
-            throw new RuntimeException("ERROR!!!");
-        }
+    public CartDto getUserCartDto(String username) {
         MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
-        headers.add("username", principal.getName());
+        headers.add("username", username);
         return restTemplate.exchange(cartServiceUrl, HttpMethod.GET, new HttpEntity(headers), CartDto.class).getBody();
     }
 
-    public void clear(Principal principal) {
-        if (principal == null) {
-            throw new RuntimeException("ERROR!!!");
-        }
+    public void clearUserCart(String username) {
         MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
-        headers.add("username", principal.getName());
+        headers.add("username", username);
         restTemplate.exchange(cartServiceUrl + "/clear", HttpMethod.GET, new HttpEntity(headers), void.class);
     }
 }

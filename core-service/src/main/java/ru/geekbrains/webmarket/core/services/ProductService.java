@@ -41,19 +41,19 @@ public class ProductService {
         return productRepository.findById(id);
     }
 
-    @Transactional
-    public ProductDetailsDto findByIdWithDetails(Long id) {
-        ProductEntity product = productRepository.findById(id).orElseGet(ProductEntity::new);
-
-        ProductDetailsDto productDetailsDto = new ProductDetailsDto();
-        productDetailsDto.setTitle(product.getTitle());
-        productDetailsDto.setPrice(product.getPrice());
-        productDetailsDto.setCategoryTitle(product.getCategoryEntity().getTitle());
-        productDetailsDto.setCommentList(product.getComments().stream().map(comment ->
-                        new CommentResponseDto(comment.getUser().getUsername(), DateTimeProcessor.formatLocalDateTime(comment.getCreatedAt()), comment.getContent()))
-                .collect(Collectors.toList()));
-        return productDetailsDto;
-    }
+//    @Transactional
+//    public ProductDetailsDto findByIdWithDetails(Long id) {
+//        ProductEntity product = productRepository.findById(id).orElseGet(ProductEntity::new);
+//
+//        ProductDetailsDto productDetailsDto = new ProductDetailsDto();
+//        productDetailsDto.setTitle(product.getTitle());
+//        productDetailsDto.setPrice(product.getPrice());
+//        productDetailsDto.setCategoryTitle(product.getCategoryEntity().getTitle());
+//        productDetailsDto.setCommentList(product.getComments().stream().map(comment ->
+//                        new CommentResponseDto(comment.getUser().getUsername(), DateTimeProcessor.formatLocalDateTime(comment.getCreatedAt()), comment.getContent()))
+//                .collect(Collectors.toList()));
+//        return productDetailsDto;
+//    }
 
     public ProductEntity save(ProductEntity productEntity) {
         return productRepository.save(productEntity);

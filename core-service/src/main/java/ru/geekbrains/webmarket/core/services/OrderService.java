@@ -9,11 +9,9 @@ import ru.geekbrains.webmarket.api.dtos.OrderItemDto;
 import ru.geekbrains.webmarket.api.exceptions.ResourceNotFoundException;
 import ru.geekbrains.webmarket.core.entities.Order;
 import ru.geekbrains.webmarket.core.entities.OrderItem;
-import ru.geekbrains.webmarket.core.entities.User;
 import ru.geekbrains.webmarket.core.integration.CartServiceIntegration;
 import ru.geekbrains.webmarket.core.repositories.OrderRepository;
 
-import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,16 +19,14 @@ import java.util.List;
 @RequiredArgsConstructor
 public class OrderService {
     private final OrderRepository orderRepository;
-    private final UserService userService;
     private final CartServiceIntegration cartServiceIntegration;
     private final ProductService productService;
 
     @Transactional
-    public void createOrder(Principal principal, OrderDetailsDto orderDetailsDto) {
-        User user = userService.findByUsername(principal.getName()).orElseThrow(() -> new ResourceNotFoundException("Не удалось найти пользователя при оформлении заказа. Имя пользователя: " + principal.getName()));
-        CartDto cart = cartServiceIntegration.getUserCartDto(principal);
+    public void createOrder(String username, OrderDetailsDto orderDetailsDto) {
+        CartDto cart = cartServiceIntegration.getUserCartDto(username);
         Order order = new Order();
-        order.setUser(user);
+        order.setUsername(username);
         order.setPrice(cart.getTotalPrice());
         order.setAddress(orderDetailsDto.getAddress());
         order.setPhone(orderDetailsDto.getPhone());
@@ -46,7 +42,7 @@ public class OrderService {
         }
         order.setItems(items);
         orderRepository.save(order);
-        cartServiceIntegration.clear(principal);
+        cartServiceIntegration.clearUserCart(username);
     }
 
     public List<Order> findAllByUsername(String username) {

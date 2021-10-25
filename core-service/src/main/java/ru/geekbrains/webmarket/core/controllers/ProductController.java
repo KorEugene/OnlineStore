@@ -22,6 +22,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/v1/products")
 @RequiredArgsConstructor
+@CrossOrigin("*")
 public class ProductController {
     private final ProductService productService;
     private final CategoryService categoryService;
@@ -45,10 +46,10 @@ public class ProductController {
         return converter.productToDto(product);
     }
 
-    @GetMapping("/{id}/details")
-    public ProductDetailsDto findByIdWithDetails(@PathVariable Long id) {
-        return productService.findByIdWithDetails(id);
-    }
+//    @GetMapping("/{id}/details")
+//    public ProductDetailsDto findByIdWithDetails(@PathVariable Long id) {
+//        return productService.findByIdWithDetails(id);
+//    }
 
     @PostMapping
     public ProductDto save(@RequestBody @Validated ProductDto productDto, BindingResult bindingResult) {
